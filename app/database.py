@@ -1,13 +1,16 @@
 from typing import Annotated
 
+from click import password_option
 from fastapi import Depends, FastAPI, HTTPException, Query
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import psycopg2
+from psycopg2.extras import RealDictCursor
+from .config import settings
 
-SQLModel = 'postgresql://postgres:root@localhost/fastapi'
-
-engine = create_engine(SQLModel )
+SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}"
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -19,3 +22,13 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+# try:
+#     conn = psycopg2.connect(host= 'localhost', database='fastapi', user='postgres', password='root', cursor_factory = RealDictCursor)
+#     cur = conn.cursor()
+#     print("Database Connection Successful")
+# except Exception as error:
+#         print('Connecting to Database Failed')
+#         print("Error", error)
+#         time.sleep(2)
