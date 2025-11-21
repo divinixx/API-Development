@@ -1,4 +1,3 @@
-from tkinter import SE
 from fastapi import Body, FastAPI, Depends
 from .database import engine
 from . import models
