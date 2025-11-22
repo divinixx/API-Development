@@ -1,8 +1,5 @@
-from traceback import print_tb
 from typing import List, Optional
-
 from sqlalchemy import func
-from app import oauth2
 from .. import models, schemas, utils, oauth2
 from fastapi import Body, FastAPI, Response, status, HTTPException, Depends, APIRouter
 from ..database import get_db

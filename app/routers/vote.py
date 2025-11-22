@@ -1,7 +1,5 @@
-from multiprocessing.sharedctypes import synchronized
-from pyexpat import model
 from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
-from sqlmodel import Session, select
+from sqlalchemy.orm import Session
 from .. import schemas, database, models, oauth2
 router = APIRouter(
     prefix="/vote",

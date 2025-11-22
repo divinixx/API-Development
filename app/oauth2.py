@@ -1,10 +1,7 @@
 from datetime import datetime, timedelta
-from ssl import DER_cert_to_PEM_cert
-
-import jwt 
+from jose import JWTError, jwt
 from fastapi import Depends,  HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jwt import PyJWTError
 from sqlalchemy.orm import Session
 from .config import settings
 from . import schemas, database, models
@@ -39,7 +36,7 @@ def verify_access_token(token: str, credential_exception):
             raise credential_exception
         token_data = schemas.TokenData(id=id)
 
-    except PyJWTError:
+    except JWTError:
         raise credential_exception
     
     return token_data
